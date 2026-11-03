@@ -20,12 +20,11 @@
 
 ## Welcome to Eldoria
 
-The Lost Kingdom is a 2D, top-down fantasy adventure. You arrive in a forgotten kingdom with a simple task: find the objects that have been hidden across its rooms, get past the Stone Guardian, and restore the seal in the Hidden Vault.
+The Lost Kingdom is a 2d top down game. Once you enter this lost kingdom, you will have many tasks to complete. Find all of the items scattered throughout the kingdom's rooms. Defeat the stone guardian and reseal the seal in the hidden vault. 
 
-The game is drawn in a dark purple and lavender palette. Its rooms, doors, objects, characters and interface are made from geometric shapes using **raylib**. You can walk around the world, interact with people and objects, keep an eye on your objectives, and open an inventory or map whenever you need one.
+It is colored in shades of dark purple and lavender. All of the room doors, objects, characters, and menu options are built using geometry through raylib. You can explore the world and talk to people and pick up objects. Check your objectives at any time and open your inventory or map when needed. 
 
-The project also keeps its original terminal version. That makes it possible to explore the same C command parser and C++ game model without the graphical window.
-
+There is also a terminal version of this project as well. Allowing you to use the C command parser and C++ game model without a window. 
 ## The journey
 
 There are six places to explore:
@@ -113,13 +112,13 @@ A few C concepts appear directly in this module:
 - **Enumeration (`enum`)** — `CommandType` gives each command a readable identifier such as `CMD_MOVE` or `CMD_PICK`.
 - **Structure (`struct`)** — `ParsedCommand` keeps the command type and its argument together.
 - **Pointers and `const`** — the parser receives the input string and an output pointer, while protecting the original input from modification.
-- **Character arrays and strings** — a bounded buffer, `strtok`, `toupper` and `strcmp` split and normalise the user's command.
+- **Character arrays and strings** — a bounded buffer, `strtok`, `toupper`, and `strcmp` split and normalize the user's command.
 - **Functions and return values** — `calculate_score()` applies the score formula and `parse_command()` reports whether parsing succeeded.
-- **Dynamic memory** — `duplicate_text()` demonstrates `malloc`, `memcpy` and caller-owned memory that must eventually be released with `free`.
+- **Dynamic memory** — `duplicate_text()` demonstrates `malloc`, `memcpy,`, and caller-owned memory that must eventually be released with `free`.
 
 ### C++17 — the game model
 
-C++ is used for the objects and behaviour that make up the kingdom. The original game model includes classes for `Item`, `Treasure`, `Tool`, `Character`, `Guide`, `Guardian`, `Room`, `Player` and `Game`.
+C++ is used for the objects and behavior that make up the kingdom. The original game model includes classes for `Item`, `Treasure`, `Tool`, `Character`, `Guide`, `Guardian`, `Room`, `Player` and `Game`.
 
 The main OOP ideas are not just vocabulary in this project; they have a place in the code:
 
@@ -127,16 +126,16 @@ The main OOP ideas are not just vocabulary in this project; they have a place in
 - **Inheritance** — `Treasure` and `Tool` extend `Item`; `Guide` and `Guardian` extend the abstract `Character` class.
 - **Virtual functions and overriding** — derived item classes provide their own `category()` and `use()` behaviour.
 - **Abstract classes** — `Character::interact()` is a pure virtual function that defines an interface for characters.
-- **Runtime polymorphism** — rooms and inventories hold items through `std::shared_ptr<Item>`, allowing virtual item behaviour to be selected from the actual object type.
+- **Runtime polymorphism** — rooms and inventories hold items through `std::shared_ptr<Item>`, allowing virtual item behavior to be selected from the actual object type.
 - **Operator overloading** — `Item::operator==` compares items by name.
 - **STL and lambdas** — `std::map`, `std::vector`, `std::find_if` and lambda expressions manage rooms and inventory.
 - **File handling and exceptions** — streams save and restore progress, while exceptions protect the game from invalid operations.
 
 ### raylib — bringing the rooms to life
 
-The graphical controller is written in C++. raylib provides the desktop window, keyboard input and drawing functions. The scene is built with geometric primitives: rectangles form the floor tiles and interface panels; circles and polygons create the decorative objects, relics and characters.
+This was made in C++.  Using raylib to display a desktop window and allow key inputs, as well as drawing. The scene consists of many shapes.  Rectangles make up the floors and menus. Circles and polygons to make up the objects, relics and player. 
 
-The game loop updates movement using frame delta time, handles keyboard input, and redraws the scene. The purple identity runs through the room palettes, panels, highlights and title screen, with lavender used for readable text and important details.
+Each frame will calculate movement based on delta time and take in key inputs. Then redraw the scene.  Purple is the color used throughout the game for the rooms, menus, and highlights. Light purple is used for text and other details that need to stand out. 
 
 ### How the two languages work together
 
@@ -224,9 +223,9 @@ ctest --test-dir build --output-on-failure
 
 ## A few honest notes
 
-The first graphical edition uses art drawn from raylib shapes rather than external sprite sheets. The room layouts and object positions are currently set in the C++ source; the text files in `data/` are reference material and are not loaded dynamically. Save/load is a lightweight project feature, not a production save system.
+The first graphical version has no sprites; it's currently just using shapes from raylib. All rooms and objects will be placed through the C++ code at the moment; the files inside data/ are only for my reference and are not used in the program. Save/load functionality is a small add-on to this project, not something I will use in my games. 
 
-There is room to grow this world: animated sprite sheets, sound, more puzzles, additional rooms and richer character interactions would all be natural next steps.
+The world can be expanded to include sprite sheets with animation, audio, and more puzzles. Rooms and characters that have more interaction with each other. 
 
 ## Project documentation
 
