@@ -23,16 +23,16 @@ constexpr float MAP_W = COLS * TILE;
 constexpr float MAP_H = ROWS * TILE;
 constexpr float PLAYER_SPEED = 240.0f;
 
-const Color INK       = { 12, 17, 29, 255 };
-const Color PANEL     = { 23, 31, 49, 255 };
-const Color PANEL2    = { 30, 41, 63, 255 };
-const Color GOLD      = { 245, 190, 86, 255 };
-const Color PALE_GOLD = { 255, 224, 155, 255 };
-const Color TEXT      = { 235, 239, 248, 255 };
-const Color MUTED     = { 151, 166, 190, 255 };
-const Color GREEN     = { 88, 170, 117, 255 };
-const Color PURPLE    = { 143, 111, 210, 255 };
-const Color RED       = { 217, 101, 105, 255 };
+const Color UI_INK       = { 12, 17, 29, 255 };
+const Color UI_PANEL     = { 23, 31, 49, 255 };
+const Color UI_PANEL2    = { 30, 41, 63, 255 };
+const Color UI_GOLD      = { 245, 190, 86, 255 };
+const Color UI_PALE_GOLD = { 255, 224, 155, 255 };
+const Color UI_TEXT      = { 235, 239, 248, 255 };
+const Color UI_MUTED     = { 151, 166, 190, 255 };
+const Color UI_GREEN     = { 88, 170, 117, 255 };
+const Color UI_PURPLE    = { 143, 111, 210, 255 };
+const Color UI_RED       = { 217, 101, 105, 255 };
 
 struct Spot {
     float x;
@@ -381,7 +381,7 @@ private:
     }
 
     void drawTree(float x, float y) const {
-        DrawCircleGradient(static_cast<int>(x), static_cast<int>(y + 9), 26, Color{24, 48, 42, 255}, Color{13, 28, 31, 255});
+        DrawCircleGradient({x, y + 9}, 26, Color{24, 48, 42, 255}, Color{13, 28, 31, 255});
         DrawCircle(static_cast<int>(x - 7), static_cast<int>(y - 5), 18, Color{67, 132, 86, 255});
         DrawCircle(static_cast<int>(x + 9), static_cast<int>(y - 8), 16, Color{85, 153, 96, 255});
         DrawCircle(static_cast<int>(x), static_cast<int>(y - 17), 14, Color{104, 171, 108, 255});
@@ -398,7 +398,7 @@ private:
             Color{204, 161, 83, 255}, Color{89, 135, 91, 255}
         };
         for (int i = 0; i < 5; ++i) DrawRectangle(x + 8 + i*8, y + 9, 6, 26, bookColors[i%4]);
-        DrawRectangle(x + 3, y + 39, 46, 5, GOLD);
+        DrawRectangle(x + 3, y + 39, 46, 5, UI_GOLD);
     }
 
     void drawRoomDecor() const {
@@ -410,12 +410,12 @@ private:
             DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 260), 64, Color{32, 56, 63, 255});
             DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 253), 52, Color{94, 153, 163, 255});
             DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 247), 39, Color{44, 91, 112, 255});
-            DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 239), 8, PALE_GOLD);
+            DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 239), 8, UI_PALE_GOLD);
         } else if (room_ == 2) {
             drawBookshelf(1, 1); drawBookshelf(4, 1); drawBookshelf(7, 1); drawBookshelf(10, 1);
             drawBookshelf(1, 6); drawBookshelf(10, 6);
             DrawRectangle(static_cast<int>(MAP_X + 330), static_cast<int>(MAP_Y + 80), 112, 15, Color{126, 90, 58, 255});
-            DrawRectangle(static_cast<int>(MAP_X + 354), static_cast<int>(MAP_Y + 72), 62, 10, GOLD);
+            DrawRectangle(static_cast<int>(MAP_X + 354), static_cast<int>(MAP_Y + 72), 62, 10, UI_GOLD);
         } else if (room_ == 3) {
             for (int c : {1, 4, 8, 10}) {
                 DrawRectangle(static_cast<int>(MAP_X + c*TILE + 6), static_cast<int>(MAP_Y + 25), 50, 18, Color{42, 61, 47, 255});
@@ -443,14 +443,14 @@ private:
             DrawCircleGradient(static_cast<int>(MAP_X + MAP_W/2), static_cast<int>(MAP_Y + MAP_H/2), 190,
                                Color{120, 91, 179, 100}, Color{24, 22, 51, 0});
             DrawRectangle(static_cast<int>(MAP_X + 340), static_cast<int>(MAP_Y + 190), 90, 90, Color{58, 42, 92, 255});
-            DrawRectangleLinesEx({MAP_X + 340, MAP_Y + 190, 90, 90}, 4, GOLD);
+            DrawRectangleLinesEx({MAP_X + 340, MAP_Y + 190, 90, 90}, 4, UI_GOLD);
             DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 235), 24, Color{177, 129, 221, 255});
-            DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 235), 12, PALE_GOLD);
+            DrawCircle(static_cast<int>(MAP_X + 385), static_cast<int>(MAP_Y + 235), 12, UI_PALE_GOLD);
         }
     }
 
     void drawDoor(const std::string& direction, bool locked = false) const {
-        Color c = locked ? RED : GOLD;
+        Color c = locked ? UI_RED : UI_GOLD;
         if (direction == "NORTH" || direction == "SOUTH") {
             const float x = MAP_X + MAP_W/2 - 37;
             const float y = direction == "NORTH" ? MAP_Y - 3 : MAP_Y + MAP_H - 15;
@@ -479,11 +479,11 @@ private:
 
     void drawItem(Spot s, const std::string& label, Color color) const {
         const float pulse = 4.0f + 2.0f*std::sin(animation_*3.0f);
-        DrawCircleGradient(static_cast<int>(s.x), static_cast<int>(s.y), 29 + pulse, Fade(color, 0.5f), Fade(color, 0.0f));
+        DrawCircleGradient({s.x, s.y}, 29 + pulse, Fade(color, 0.5f), Fade(color, 0.0f));
         DrawCircle(static_cast<int>(s.x), static_cast<int>(s.y), 15, color);
-        DrawPoly({s.x, s.y - 1}, 4, 15, 45.0f, PALE_GOLD);
+        DrawPoly({s.x, s.y - 1}, 4, 15, 45.0f, UI_PALE_GOLD);
         DrawCircle(static_cast<int>(s.x), static_cast<int>(s.y), 4, Color{255, 255, 255, 255});
-        DrawText(label.c_str(), static_cast<int>(s.x - MeasureText(label.c_str(), 12)/2), static_cast<int>(s.y + 23), 12, TEXT);
+        DrawText(label.c_str(), static_cast<int>(s.x - MeasureText(label.c_str(), 12)/2), static_cast<int>(s.y + 23), 12, UI_TEXT);
     }
 
     void drawCharacter(Spot s, bool guardian) const {
@@ -493,11 +493,11 @@ private:
         DrawRectangleRounded({s.x - 13, s.y + 4, 26, 28}, 0.18f, 5, guardian ? Color{75, 78, 101, 255} : Color{73, 108, 157, 255});
         DrawCircle(static_cast<int>(s.x), static_cast<int>(s.y - 12), 16, guardian ? Color{161, 164, 183, 255} : Color{226, 186, 142, 255});
         DrawRectangle(static_cast<int>(s.x - 16), static_cast<int>(s.y - 22), 32, 8, guardian ? Color{79, 83, 104, 255} : Color{91, 62, 47, 255});
-        DrawCircle(static_cast<int>(s.x - 5), static_cast<int>(s.y - 12), 2, INK);
-        DrawCircle(static_cast<int>(s.x + 5), static_cast<int>(s.y - 12), 2, INK);
-        DrawCircleLines(static_cast<int>(s.x), static_cast<int>(s.y - 12), 16, Fade(GOLD, 0.7f));
+        DrawCircle(static_cast<int>(s.x - 5), static_cast<int>(s.y - 12), 2, UI_INK);
+        DrawCircle(static_cast<int>(s.x + 5), static_cast<int>(s.y - 12), 2, UI_INK);
+        DrawCircleLines(static_cast<int>(s.x), static_cast<int>(s.y - 12), 16, Fade(UI_GOLD, 0.7f));
         const char* name = guardian ? "STONE GUARDIAN" : "MIRA";
-        DrawText(name, static_cast<int>(s.x - MeasureText(name, 12)/2), static_cast<int>(s.y + 44), 12, PALE_GOLD);
+        DrawText(name, static_cast<int>(s.x - MeasureText(name, 12)/2), static_cast<int>(s.y + 44), 12, UI_PALE_GOLD);
     }
 
     void drawPlayer() const {
@@ -507,15 +507,15 @@ private:
         DrawRectangleRounded({player_.x - 9, player_.y + 3 + bob, 18, 19}, 0.2f, 5, Color{42, 74, 137, 255});
         DrawCircle(static_cast<int>(player_.x), static_cast<int>(player_.y - 12 + bob), 12, Color{231, 187, 145, 255});
         DrawRectangle(static_cast<int>(player_.x - 12), static_cast<int>(player_.y - 21 + bob), 24, 7, Color{52, 38, 43, 255});
-        DrawCircle(static_cast<int>(player_.x - 4), static_cast<int>(player_.y - 12 + bob), 2, INK);
-        DrawCircle(static_cast<int>(player_.x + 4), static_cast<int>(player_.y - 12 + bob), 2, INK);
-        DrawCircleLines(static_cast<int>(player_.x), static_cast<int>(player_.y - 12 + bob), 13, PALE_GOLD);
+        DrawCircle(static_cast<int>(player_.x - 4), static_cast<int>(player_.y - 12 + bob), 2, UI_INK);
+        DrawCircle(static_cast<int>(player_.x + 4), static_cast<int>(player_.y - 12 + bob), 2, UI_INK);
+        DrawCircleLines(static_cast<int>(player_.x), static_cast<int>(player_.y - 12 + bob), 13, UI_PALE_GOLD);
     }
 
     void drawWorld() const {
-        DrawRectangleRounded({24, 118, 810, 620}, 0.04f, 8, PANEL);
-        DrawText(ROOM_NAMES[room_], 44, 128, 20, TEXT);
-        DrawText("EXPLORE THE KINGDOM", 650, 133, 10, MUTED);
+        DrawRectangleRounded({24, 118, 810, 620}, 0.04f, 8, UI_PANEL);
+        DrawText(ROOM_NAMES[room_], 44, 128, 20, UI_TEXT);
+        DrawText("EXPLORE THE KINGDOM", 650, 133, 10, UI_MUTED);
         for (int row = 0; row < ROWS; ++row) {
             for (int col = 0; col < COLS; ++col) {
                 const int x = static_cast<int>(MAP_X + col*TILE);
@@ -544,55 +544,55 @@ private:
     }
 
     void drawMapOverlay() const {
-        DrawRectangleRounded({260, 270, 430, 210}, 0.08f, 10, Fade(INK, 0.96f));
-        DrawRectangleLinesEx({260, 270, 430, 210}, 2, GOLD);
-        DrawText("ELDORIA  /  WORLD MAP", 286, 286, 19, PALE_GOLD);
+        DrawRectangleRounded({260, 270, 430, 210}, 0.08f, 10, Fade(UI_INK, 0.96f));
+        DrawRectangleLinesEx({260, 270, 430, 210}, 2, UI_GOLD);
+        DrawText("ELDORIA  /  WORLD MAP", 286, 286, 19, UI_PALE_GOLD);
         const char* names[] = {"1 Courtyard", "2 Library", "3 Greenhouse", "4 Sunken Hall", "5 Watchtower", "6 Hidden Vault"};
         for (int i = 0; i < 6; ++i) {
-            Color c = (i + 1 == room_) ? GOLD : MUTED;
+            Color c = (i + 1 == room_) ? UI_GOLD : UI_MUTED;
             DrawCircle(294, 334 + i*23, 5, c);
             DrawText(names[i], 310, 326 + i*23, 15, c);
         }
-        DrawText("Press M to close", 540, 449, 11, MUTED);
+        DrawText("Press M to close", 540, 449, 11, UI_MUTED);
     }
 
     void drawInventoryOverlay() const {
-        DrawRectangleRounded({240, 285, 470, 190}, 0.08f, 10, Fade(INK, 0.97f));
-        DrawRectangleLinesEx({240, 285, 470, 190}, 2, GOLD);
-        DrawText("INVENTORY", 268, 302, 20, PALE_GOLD);
+        DrawRectangleRounded({240, 285, 470, 190}, 0.08f, 10, Fade(UI_INK, 0.97f));
+        DrawRectangleLinesEx({240, 285, 470, 190}, 2, UI_GOLD);
+        DrawText("INVENTORY", 268, 302, 20, UI_PALE_GOLD);
         int y = 344;
         if (!hasSeal_ && !hasKey_ && !hasCoin_) {
-            DrawText("Your satchel is empty. Explore to find useful objects.", 268, y, 15, MUTED);
+            DrawText("Your satchel is empty. Explore to find useful objects.", 268, y, 15, UI_MUTED);
         } else {
-            if (hasSeal_) { DrawCircle(278, y+8, 8, GOLD); DrawText("ANCIENT SEAL  /  required for the final vault", 297, y, 14, TEXT); y += 31; }
-            if (hasKey_) { DrawCircle(278, y+8, 8, SKYBLUE); DrawText("LUMINOUS KEY  /  opens the Guardian barrier", 297, y, 14, TEXT); y += 31; }
-            if (hasCoin_) { DrawCircle(278, y+8, 8, PALE_GOLD); DrawText("ROYAL COIN  /  optional treasure", 297, y, 14, TEXT); y += 31; }
+            if (hasSeal_) { DrawCircle(278, y+8, 8, UI_GOLD); DrawText("ANCIENT SEAL  /  required for the final vault", 297, y, 14, UI_TEXT); y += 31; }
+            if (hasKey_) { DrawCircle(278, y+8, 8, SKYBLUE); DrawText("LUMINOUS KEY  /  opens the Guardian barrier", 297, y, 14, UI_TEXT); y += 31; }
+            if (hasCoin_) { DrawCircle(278, y+8, 8, UI_PALE_GOLD); DrawText("ROYAL COIN  /  optional treasure", 297, y, 14, UI_TEXT); y += 31; }
         }
-        DrawText("Press I to close", 560, 447, 11, MUTED);
+        DrawText("Press I to close", 560, 447, 11, UI_MUTED);
     }
 
     void drawHeader() const {
         DrawRectangleGradientV(0, 0, SCREEN_W, 100, Color{13, 19, 34, 255}, Color{28, 31, 54, 255});
-        DrawText("THE LOST KINGDOM", 28, 21, 30, PALE_GOLD);
-        DrawText("A 2D FANTASY ADVENTURE", 31, 58, 11, MUTED);
-        DrawText("ELDORIA  /  QUEST STATUS", 730, 20, 11, MUTED);
-        DrawText(TextFormat("SCORE  %03i", score_), 730, 44, 18, GOLD);
-        DrawText("HEALTH", 930, 22, 10, MUTED);
+        DrawText("THE LOST KINGDOM", 28, 21, 30, UI_PALE_GOLD);
+        DrawText("A 2D FANTASY ADVENTURE", 31, 58, 11, UI_MUTED);
+        DrawText("ELDORIA  /  QUEST STATUS", 730, 20, 11, UI_MUTED);
+        DrawText(TextFormat("SCORE  %03i", score_), 730, 44, 18, UI_GOLD);
+        DrawText("HEALTH", 930, 22, 10, UI_MUTED);
         DrawRectangleRounded({930, 43, 190, 13}, 0.5f, 8, Color{51, 59, 77, 255});
-        DrawRectangleRounded({930, 43, 190.0f * health_/100.0f, 13}, 0.5f, 8, GREEN);
-        DrawText(TextFormat("%i / 100", health_), 1130, 41, 13, TEXT);
-        DrawLine(24, 98, SCREEN_W - 24, 98, Fade(GOLD, 0.45f));
+        DrawRectangleRounded({930, 43, 190.0f * health_/100.0f, 13}, 0.5f, 8, UI_GREEN);
+        DrawText(TextFormat("%i / 100", health_), 1130, 41, 13, UI_TEXT);
+        DrawLine(24, 98, SCREEN_W - 24, 98, Fade(UI_GOLD, 0.45f));
     }
 
     void drawSidePanel() const {
-        DrawRectangleRounded({854, 118, 402, 620}, 0.04f, 8, PANEL);
-        DrawText("QUEST OBJECTIVES", 878, 140, 17, PALE_GOLD);
-        DrawLine(878, 168, 1230, 168, Fade(GOLD, 0.35f));
+        DrawRectangleRounded({854, 118, 402, 620}, 0.04f, 8, UI_PANEL);
+        DrawText("QUEST OBJECTIVES", 878, 140, 17, UI_PALE_GOLD);
+        DrawLine(878, 168, 1230, 168, Fade(UI_GOLD, 0.35f));
 
         auto objective = [&](int y, const char* label, bool done) {
-            DrawCircle(891, y + 8, 7, done ? GREEN : Color{74, 86, 108, 255});
-            if (done) DrawLine(887, y+8, 890, y+11, 2, TEXT), DrawLine(890, y+11, 896, y+4, 2, TEXT);
-            DrawText(label, 910, y, 14, done ? Color{150, 202, 166, 255} : TEXT);
+            DrawCircle(891, y + 8, 7, done ? UI_GREEN : Color{74, 86, 108, 255});
+            if (done) DrawLine(887, y+8, 890, y+11, 2, UI_TEXT), DrawLine(890, y+11, 896, y+4, 2, UI_TEXT);
+            DrawText(label, 910, y, 14, done ? Color{150, 202, 166, 255} : UI_TEXT);
         };
         objective(187, "Speak to Mira in the Courtyard", guideSpoken_);
         objective(218, "Find the Ancient Seal", hasSeal_);
@@ -600,19 +600,19 @@ private:
         objective(280, "Open the Watchtower barrier", guardianDefeated_);
         objective(311, "Restore the Hidden Vault", victory_);
 
-        DrawLine(878, 350, 1230, 350, Fade(GOLD, 0.35f));
-        DrawText("YOUR SATCHEL", 878, 370, 17, PALE_GOLD);
+        DrawLine(878, 350, 1230, 350, Fade(UI_GOLD, 0.35f));
+        DrawText("YOUR SATCHEL", 878, 370, 17, UI_PALE_GOLD);
         int y = 402;
         if (!hasSeal_ && !hasKey_ && !hasCoin_) {
-            DrawText("No items collected yet.", 880, y, 13, MUTED);
+            DrawText("No items collected yet.", 880, y, 13, UI_MUTED);
         } else {
-            if (hasSeal_) { DrawCircle(889, y+8, 7, GOLD); DrawText("Ancient Seal", 906, y, 13, TEXT); y += 27; }
-            if (hasKey_) { DrawCircle(889, y+8, 7, SKYBLUE); DrawText("Luminous Key", 906, y, 13, TEXT); y += 27; }
-            if (hasCoin_) { DrawCircle(889, y+8, 7, PALE_GOLD); DrawText("Royal Coin", 906, y, 13, TEXT); y += 27; }
+            if (hasSeal_) { DrawCircle(889, y+8, 7, UI_GOLD); DrawText("Ancient Seal", 906, y, 13, UI_TEXT); y += 27; }
+            if (hasKey_) { DrawCircle(889, y+8, 7, SKYBLUE); DrawText("Luminous Key", 906, y, 13, UI_TEXT); y += 27; }
+            if (hasCoin_) { DrawCircle(889, y+8, 7, UI_PALE_GOLD); DrawText("Royal Coin", 906, y, 13, UI_TEXT); y += 27; }
         }
 
-        DrawLine(878, 500, 1230, 500, Fade(GOLD, 0.35f));
-        DrawText("KINGDOM JOURNAL", 878, 519, 17, PALE_GOLD);
+        DrawLine(878, 500, 1230, 500, Fade(UI_GOLD, 0.35f));
+        DrawText("KINGDOM JOURNAL", 878, 519, 17, UI_PALE_GOLD);
         int logY = 551;
         for (const auto& entry : log_) {
             const int maxW = 345;
@@ -625,7 +625,7 @@ private:
                     const auto split = shown.find_last_of(' ');
                     if (split != std::string::npos) shown.resize(split);
                 }
-                DrawText(shown.c_str(), 880, logY, 12, MUTED);
+                DrawText(shown.c_str(), 880, logY, 12, UI_MUTED);
                 logY += 16;
                 if (shown.size() >= line.size()) break;
                 line.erase(0, shown.size());
@@ -637,29 +637,29 @@ private:
     }
 
     void drawBottomBar() const {
-        DrawRectangleRounded({24, 751, 1232, 35}, 0.25f, 8, PANEL2);
-        DrawText("WASD / ARROWS", 42, 762, 12, PALE_GOLD);
-        DrawText("MOVE", 153, 762, 11, MUTED);
-        DrawText("E", 215, 762, 12, PALE_GOLD);
-        DrawText("INTERACT", 232, 762, 11, MUTED);
-        DrawText("I", 315, 762, 12, PALE_GOLD);
-        DrawText("INVENTORY", 331, 762, 11, MUTED);
-        DrawText("M", 430, 762, 12, PALE_GOLD);
-        DrawText("MAP", 446, 762, 11, MUTED);
-        DrawText("/", 500, 762, 12, PALE_GOLD);
-        DrawText("COMMANDS", 514, 762, 11, MUTED);
-        DrawText("F5 SAVE  /  F9 LOAD  /  H HELP", 1000, 762, 11, MUTED);
+        DrawRectangleRounded({24, 751, 1232, 35}, 0.25f, 8, UI_PANEL2);
+        DrawText("WASD / ARROWS", 42, 762, 12, UI_PALE_GOLD);
+        DrawText("MOVE", 153, 762, 11, UI_MUTED);
+        DrawText("E", 215, 762, 12, UI_PALE_GOLD);
+        DrawText("INTERACT", 232, 762, 11, UI_MUTED);
+        DrawText("I", 315, 762, 12, UI_PALE_GOLD);
+        DrawText("INVENTORY", 331, 762, 11, UI_MUTED);
+        DrawText("M", 430, 762, 12, UI_PALE_GOLD);
+        DrawText("MAP", 446, 762, 11, UI_MUTED);
+        DrawText("/", 500, 762, 12, UI_PALE_GOLD);
+        DrawText("COMMANDS", 514, 762, 11, UI_MUTED);
+        DrawText("F5 SAVE  /  F9 LOAD  /  H HELP", 1000, 762, 11, UI_MUTED);
     }
 
     void drawCommandOverlay() const {
-        DrawRectangle(0, 0, SCREEN_W, SCREEN_H, Fade(INK, 0.78f));
-        DrawRectangleRounded({245, 310, 790, 160}, 0.06f, 10, PANEL);
-        DrawRectangleLinesEx({245, 310, 790, 160}, 2, GOLD);
-        DrawText("COMMAND CONSOLE  /  C PARSER", 275, 333, 19, PALE_GOLD);
+        DrawRectangle(0, 0, SCREEN_W, SCREEN_H, Fade(UI_INK, 0.78f));
+        DrawRectangleRounded({245, 310, 790, 160}, 0.06f, 10, UI_PANEL);
+        DrawRectangleLinesEx({245, 310, 790, 160}, 2, UI_GOLD);
+        DrawText("COMMAND CONSOLE  /  C PARSER", 275, 333, 19, UI_PALE_GOLD);
         DrawRectangleRounded({275, 375, 730, 42}, 0.15f, 8, Color{11, 16, 28, 255});
-        DrawText(">", 292, 386, 18, GOLD);
-        DrawText(commandLine_.c_str(), 318, 386, 17, TEXT);
-        DrawText("ENTER to execute  |  BACKSPACE to edit  |  ESC to close", 275, 435, 12, MUTED);
+        DrawText(">", 292, 386, 18, UI_GOLD);
+        DrawText(commandLine_.c_str(), 318, 386, 17, UI_TEXT);
+        DrawText("ENTER to execute  |  BACKSPACE to edit  |  ESC to close", 275, 435, 12, UI_MUTED);
     }
 
     void drawStartScreen() const {
@@ -667,23 +667,23 @@ private:
         for (int i = 0; i < 70; ++i) {
             const int x = (i*193 + 41) % SCREEN_W;
             const int y = (i*79 + 28) % SCREEN_H;
-            DrawCircle(x, y, (i%3 == 0) ? 2 : 1, Fade(PALE_GOLD, 0.45f));
+            DrawCircle(x, y, (i%3 == 0) ? 2 : 1, Fade(UI_PALE_GOLD, 0.45f));
         }
-        DrawCircleGradient(640, 340, 190, Fade(PURPLE, 0.38f), Fade(PURPLE, 0.0f));
-        DrawPoly({640, 320}, 6, 92, 30, Fade(GOLD, 0.85f));
+        DrawCircleGradient({640, 340}, 190, Fade(UI_PURPLE, 0.38f), Fade(UI_PURPLE, 0.0f));
+        DrawPoly({640, 320}, 6, 92, 30, Fade(UI_GOLD, 0.85f));
         DrawPoly({640, 320}, 6, 70, 30, Color{36, 32, 64, 255});
         DrawCircle(640, 320, 34, Color{232, 182, 92, 255});
         DrawCircle(640, 320, 21, Color{80, 109, 150, 255});
-        DrawText("THE LOST KINGDOM", 0, 485, 48, PALE_GOLD);
-        DrawText("A GRAPHICAL ADVENTURE THROUGH FORGOTTEN ELDORIA", 0, 544, 16, MUTED);
+        DrawText("THE LOST KINGDOM", 0, 485, 48, UI_PALE_GOLD);
+        DrawText("A GRAPHICAL ADVENTURE THROUGH FORGOTTEN ELDORIA", 0, 544, 16, UI_MUTED);
         const int titleW = MeasureText("THE LOST KINGDOM", 48);
-        DrawText("THE LOST KINGDOM", (SCREEN_W-titleW)/2, 485, 48, PALE_GOLD);
+        DrawText("THE LOST KINGDOM", (SCREEN_W-titleW)/2, 485, 48, UI_PALE_GOLD);
         const char* subtitle = "A GRAPHICAL ADVENTURE THROUGH FORGOTTEN ELDORIA";
-        DrawText(subtitle, (SCREEN_W-MeasureText(subtitle, 16))/2, 544, 16, MUTED);
+        DrawText(subtitle, (SCREEN_W-MeasureText(subtitle, 16))/2, 544, 16, UI_MUTED);
         const char* prompt = "PRESS ENTER TO BEGIN";
-        DrawText(prompt, (SCREEN_W-MeasureText(prompt, 18))/2, 650, 18, TEXT);
-        DrawText("WASD / ARROWS  MOVE     E  INTERACT     I  INVENTORY", 0, 695, 12, MUTED);
-        DrawText("C11 + C++17  |  POWERED BY RAYLIB", 0, 744, 11, GOLD);
+        DrawText(prompt, (SCREEN_W-MeasureText(prompt, 18))/2, 650, 18, UI_TEXT);
+        DrawText("WASD / ARROWS  MOVE     E  INTERACT     I  INVENTORY", 0, 695, 12, UI_MUTED);
+        DrawText("C11 + C++17  |  POWERED BY RAYLIB", 0, 744, 11, UI_GOLD);
     }
 
     void drawVictoryScreen() const {
@@ -691,24 +691,24 @@ private:
         for (int i = 0; i < 80; ++i) {
             const int x = (i*173 + 17) % SCREEN_W;
             const int y = (i*97 + 12) % SCREEN_H;
-            DrawCircle(x, y, (i%2 == 0) ? 3 : 2, Fade(PALE_GOLD, 0.7f));
+            DrawCircle(x, y, (i%2 == 0) ? 3 : 2, Fade(UI_PALE_GOLD, 0.7f));
         }
-        DrawCircleGradient(640, 270, 210, Fade(GOLD, 0.35f), Fade(GOLD, 0.0f));
-        DrawPoly({640, 250}, 8, 92, 22.5f, GOLD);
+        DrawCircleGradient({640, 270}, 210, Fade(UI_GOLD, 0.35f), Fade(UI_GOLD, 0.0f));
+        DrawPoly({640, 250}, 8, 92, 22.5f, UI_GOLD);
         DrawPoly({640, 250}, 8, 67, 22.5f, Color{80, 80, 135, 255});
-        DrawCircle(640, 250, 31, PALE_GOLD);
-        DrawText("ELDORIA IS RESTORED", (SCREEN_W-MeasureText("ELDORIA IS RESTORED", 38))/2, 430, 38, PALE_GOLD);
+        DrawCircle(640, 250, 31, UI_PALE_GOLD);
+        DrawText("ELDORIA IS RESTORED", (SCREEN_W-MeasureText("ELDORIA IS RESTORED", 38))/2, 430, 38, UI_PALE_GOLD);
         const char* message = "The Ancient Seal has awakened the heart of the kingdom.";
-        DrawText(message, (SCREEN_W-MeasureText(message, 17))/2, 492, 17, TEXT);
-        DrawText(TextFormat("FINAL SCORE  %03i", score_), (SCREEN_W-MeasureText(TextFormat("FINAL SCORE  %03i", score_), 20))/2, 548, 20, GOLD);
+        DrawText(message, (SCREEN_W-MeasureText(message, 17))/2, 492, 17, UI_TEXT);
+        DrawText(TextFormat("FINAL SCORE  %03i", score_), (SCREEN_W-MeasureText(TextFormat("FINAL SCORE  %03i", score_), 20))/2, 548, 20, UI_GOLD);
         const char* close = "PRESS ESC TO CLOSE";
-        DrawText(close, (SCREEN_W-MeasureText(close, 13))/2, 650, 13, MUTED);
+        DrawText(close, (SCREEN_W-MeasureText(close, 13))/2, 650, 13, UI_MUTED);
     }
 
     void draw() const {
         if (startScreen_) { drawStartScreen(); return; }
         if (victory_) { drawVictoryScreen(); return; }
-        ClearBackground(INK);
+        ClearBackground(UI_INK);
         drawHeader();
         drawWorld();
         drawSidePanel();
