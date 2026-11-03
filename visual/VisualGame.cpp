@@ -136,12 +136,11 @@ private:
         int nextRoom = room_;
         if (direction == "NORTH") {
             if (room_ == 1) nextRoom = 2;
-            else if (room_ == 3) nextRoom = 4;
+            else if (room_ == 4) nextRoom = 3;
             else if (room_ == 5 && guardianDefeated_) nextRoom = 6;
         } else if (direction == "SOUTH") {
             if (room_ == 2) nextRoom = 1;
-            else if (room_ == 3) nextRoom = 1;
-            else if (room_ == 4) nextRoom = 3;
+            else if (room_ == 3) nextRoom = 4;
             else if (room_ == 6) nextRoom = 5;
         } else if (direction == "EAST") {
             if (room_ == 1) nextRoom = 3;
