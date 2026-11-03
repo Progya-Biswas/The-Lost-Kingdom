@@ -1,0 +1,6 @@
+1|The Arrival Courtyard|A cracked fountain stands beneath a faded royal crest.
+2|The Old Library|Dusty shelves conceal a faintly glowing seal.
+3|The Greenhouse|Wild vines cover the glass roof and a silver tool rests here.
+4|The Sunken Hall|Water reflects a mural of the kingdom's three ancient seals.
+5|The Watchtower|A stone guardian watches the northern arch.
+6|The Hidden Vault|A sealed chamber holds the final royal seal.
