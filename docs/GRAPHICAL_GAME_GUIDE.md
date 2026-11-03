@@ -14,9 +14,12 @@ The first CMake configure downloads raylib 6.2. Internet access is required for 
 - The large left viewport renders the current room as a top-down tile scene.
 - The character is controlled with WASD or arrow keys.
 - The panel on the right lists objectives, inventory and recent story messages.
-- Doors are shown in gold. The Watchtower's locked north exit is red until the key is used.
+- Doors and interface highlights use the game's amethyst-violet accent. The Watchtower's locked north exit uses a contrasting pink-red tone until the key is used.
 - The top bar shows the current score and health.
 - The bottom bar displays the keyboard controls.
+
+## Purple visual theme
+The interface uses deep plum panels, violet room accents and pale lavender text. Room tiles are shaded in related purple tones, while collectible objects retain brighter highlights so they remain easy to spot.
 
 ## Controls
 | Key | Action |
