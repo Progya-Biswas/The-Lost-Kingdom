@@ -202,7 +202,8 @@ The-Lost-Kingdom/
 ├── .github/workflows/   # Automated build and test workflow
 ├── c_modules/           # C command parser and utilities
 ├── cpp_modules/         # C++ object-oriented terminal game model
-├── visual/              # raylib graphical controller and drawing
+├── visual/              # Default raylib graphical controller and drawing
+├── gui/                  # Separate SDL2 GUI prototype (not the default CMake target)
 ├── include/              # Shared headers and class declarations
 ├── tests/                # C command-parser tests
 ├── data/                 # Room and story reference text
@@ -235,7 +236,8 @@ There is room to grow this world: animated sprite sheets, sound, more puzzles, a
 - [Graphical game guide](docs/GRAPHICAL_GAME_GUIDE.md)
 - [Game design and technical notes](docs/GAME_DESIGN.md)
 - [Terminal edition sample commands](docs/GAMEPLAY_TRANSCRIPT.md)
-- [C and C++ project report (Word)](docs/The_Lost_Kingdom_Project_Report.docx)
+
+The revised C/C++ assessment report is supplied separately as a Word document for the 10-mark submission.
 
 ---
 
