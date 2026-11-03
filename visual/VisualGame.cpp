@@ -23,16 +23,17 @@ constexpr float MAP_W = COLS * TILE;
 constexpr float MAP_H = ROWS * TILE;
 constexpr float PLAYER_SPEED = 240.0f;
 
-const Color UI_INK       = { 12, 17, 29, 255 };
-const Color UI_PANEL     = { 23, 31, 49, 255 };
-const Color UI_PANEL2    = { 30, 41, 63, 255 };
-const Color UI_GOLD      = { 245, 190, 86, 255 };
-const Color UI_PALE_GOLD = { 255, 224, 155, 255 };
-const Color UI_TEXT      = { 235, 239, 248, 255 };
-const Color UI_MUTED     = { 151, 166, 190, 255 };
-const Color UI_GREEN     = { 88, 170, 117, 255 };
-const Color UI_PURPLE    = { 143, 111, 210, 255 };
-const Color UI_RED       = { 217, 101, 105, 255 };
+// Visual identity: deep plum surfaces, violet highlights and soft lavender type.
+const Color UI_INK       = { 14, 10, 27, 255 };
+const Color UI_PANEL     = { 29, 21, 48, 255 };
+const Color UI_PANEL2    = { 43, 31, 69, 255 };
+const Color UI_GOLD      = { 164, 119, 224, 255 }; // Primary amethyst accent
+const Color UI_PALE_GOLD = { 226, 210, 255, 255 }; // Soft lavender highlight
+const Color UI_TEXT      = { 239, 235, 249, 255 };
+const Color UI_MUTED     = { 164, 151, 190, 255 };
+const Color UI_GREEN     = { 111, 184, 143, 255 };
+const Color UI_PURPLE    = { 151, 111, 218, 255 };
+const Color UI_RED       = { 224, 111, 151, 255 };
 
 struct Spot {
     float x;
@@ -57,12 +58,12 @@ float distanceBetween(Spot a, Spot b) {
 Color floorColor(int room, int col, int row) {
     const bool alternate = ((col + row) % 2) == 0;
     switch (room) {
-        case 1: return alternate ? Color{45, 86, 67, 255} : Color{42, 79, 62, 255};
-        case 2: return alternate ? Color{91, 65, 48, 255} : Color{83, 58, 44, 255};
-        case 3: return alternate ? Color{59, 104, 72, 255} : Color{52, 95, 67, 255};
-        case 4: return alternate ? Color{53, 72, 88, 255} : Color{47, 65, 82, 255};
-        case 5: return alternate ? Color{84, 82, 95, 255} : Color{74, 73, 88, 255};
-        default:return alternate ? Color{69, 58, 103, 255}: Color{61, 51, 94, 255};
+        case 1: return alternate ? Color{55, 45, 83, 255} : Color{47, 38, 72, 255};
+        case 2: return alternate ? Color{80, 60, 103, 255} : Color{69, 50, 91, 255};
+        case 3: return alternate ? Color{55, 68, 101, 255} : Color{46, 57, 87, 255};
+        case 4: return alternate ? Color{56, 53, 91, 255} : Color{47, 45, 79, 255};
+        case 5: return alternate ? Color{78, 58, 101, 255} : Color{66, 48, 88, 255};
+        default:return alternate ? Color{78, 59, 116, 255}: Color{65, 49, 99, 255};
     }
 }
 
