@@ -440,7 +440,7 @@ private:
                 DrawRectangle(static_cast<int>(MAP_X + 658), static_cast<int>(MAP_Y + r*TILE + 7), 20, 52, Color{122, 112, 139, 255});
             }
         } else {
-            DrawCircleGradient(static_cast<int>(MAP_X + MAP_W/2), static_cast<int>(MAP_Y + MAP_H/2), 190,
+            DrawCircleGradient({MAP_X + MAP_W/2, MAP_Y + MAP_H/2}, 190,
                                Color{120, 91, 179, 100}, Color{24, 22, 51, 0});
             DrawRectangle(static_cast<int>(MAP_X + 340), static_cast<int>(MAP_Y + 190), 90, 90, Color{58, 42, 92, 255});
             DrawRectangleLinesEx({MAP_X + 340, MAP_Y + 190, 90, 90}, 4, UI_GOLD);
