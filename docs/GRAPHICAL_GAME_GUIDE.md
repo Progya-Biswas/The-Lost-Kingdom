@@ -8,18 +8,16 @@
 5. Start `.\build\Release\lost_kingdom.exe`.
 6. Press Enter on the title screen.
 
-The first CMake configure downloads raylib 6.2. Internet access is required for that first configure.
+The first CMake configuration downloads raylib 6.2. Internet access is required for that first configuration.
 
 ## Screen layout
 - The large left viewport renders the current room as a top-down tile scene.
 - The character is controlled with WASD or arrow keys.
-- The panel on the right lists objectives, inventory and recent story messages.
+- The panel on the right lists objectives, inventory, and recent story messages.
 - Doors and interface highlights use the game's amethyst-violet accent. The Watchtower's locked north exit uses a contrasting pink-red tone until the key is used.
 - The top bar shows the current score and health.
 - The bottom bar displays the keyboard controls.
 
-## Purple visual theme
-The interface uses deep plum panels, violet room accents and pale lavender text. Room tiles are shaded in related purple tones, while collectible objects retain brighter highlights so they remain easy to spot.
 
 ## Controls
 | Key | Action |
@@ -41,7 +39,7 @@ The interface uses deep plum panels, violet room accents and pale lavender text.
 3. Return south, then travel east to the Greenhouse. Collect the Luminous Key with E.
 4. Travel south into the Sunken Hall, then east to the Watchtower.
 5. Move close to the Stone Guardian and press E. The carried key dissolves its barrier.
-6. Move north to the Hidden Vault, approach the altar and press E while carrying the Ancient Seal.
+6. Move north to the Hidden Vault, approach the altar, and press E while carrying the Ancient Seal.
 
 An optional Royal Coin in the Sunken Hall gives bonus points.
 
