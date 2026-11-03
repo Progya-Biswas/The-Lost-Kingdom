@@ -12,9 +12,13 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+      - name: Install Linux graphics build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libxinerama-dev libxcursor-dev
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-      - name: Build project
+      - name: Build graphical and command-line games
         run: cmake --build build --parallel
-      - name: Run tests
+      - name: Run C command parser tests
         run: ctest --test-dir build --output-on-failure
