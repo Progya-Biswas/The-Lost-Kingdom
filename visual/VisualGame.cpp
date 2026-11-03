@@ -294,8 +294,8 @@ private:
     void saveGame() {
         std::ofstream out("saves/graphical_save.txt");
         if (!out) { addLog("Could not create save file. Run from the project folder."); return; }
-        out << room_ << '\\n' << score_ << '\\n' << hasSeal_ << '\\n' << hasKey_
-            << '\\n' << hasCoin_ << '\\n' << guardianDefeated_ << '\\n';
+        out << room_ << '\n' << score_ << '\n' << hasSeal_ << '\n' << hasKey_
+            << '\n' << hasCoin_ << '\n' << guardianDefeated_ << '\n';
         addLog("Progress saved to saves/graphical_save.txt.");
         saveExists_ = true;
     }
@@ -590,7 +590,7 @@ private:
 
         auto objective = [&](int y, const char* label, bool done) {
             DrawCircle(891, y + 8, 7, done ? UI_GREEN : Color{74, 86, 108, 255});
-            if (done) DrawLine(887, y+8, 890, y+11, 2, UI_TEXT), DrawLine(890, y+11, 896, y+4, 2, UI_TEXT);
+            if (done) { DrawLineEx({887.0f, static_cast<float>(y+8)}, {890.0f, static_cast<float>(y+11)}, 2.0f, UI_TEXT); DrawLineEx({890.0f, static_cast<float>(y+11)}, {896.0f, static_cast<float>(y+4)}, 2.0f, UI_TEXT); }
             DrawText(label, 910, y, 14, done ? Color{150, 202, 166, 255} : UI_TEXT);
         };
         objective(187, "Speak to Mira in the Courtyard", guideSpoken_);
