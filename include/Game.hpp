@@ -1,7 +1,6 @@
 #pragma once
 
 #include "c_utils.h"
-#include <iostream>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -68,12 +67,10 @@ public:
     void connect(const std::string& direction, int destination);
     bool hasExit(const std::string& direction) const;
     int destination(const std::string& direction) const;
-    const std::map<std::string, int>& exits() const;
     void addItem(std::shared_ptr<Item> item);
     std::shared_ptr<Item> takeItem(const std::string& name);
     void addCharacter(std::shared_ptr<Character> character);
     const std::vector<std::shared_ptr<Item>>& items() const;
-    bool hasCharacters() const;
     void describe(std::ostream& out) const;
 private:
     int id_;
@@ -113,20 +110,9 @@ private:
 
 class Game {
 public:
-    explicit Game(std::ostream& out = std::cout);
+    Game();
     void run();
-
-    // Single-step interface used by the graphical front end.
-    void printIntro();
-    void handleCommand(const std::string& line);
-    bool running() const { return running_; }
-    bool won() const { return won_; }
-    bool guardianDefeated() const { return guardianDefeated_; }
-    bool puzzleSolved() const { return puzzleSolved_; }
-    const Player& player() const { return player_; }
-    const Room& currentRoom() const { return rooms_.at(player_.roomId()); }
 private:
-    std::ostream& out_;
     std::map<int, Room> rooms_;
     Player player_;
     bool guardianDefeated_ = false;
