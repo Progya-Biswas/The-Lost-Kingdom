@@ -1,0 +1,10 @@
+build/
+cmake-build-*/
+*.o
+*.obj
+*.exe
+saves/*
+!saves/.gitkeep
+.DS_Store
+.vscode/
+.idea/
