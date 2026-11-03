@@ -1,0 +1,38 @@
+THE LOST KINGDOM — sample launch
+=================================
+> HELP
+Available commands: HELP, LOOK, MOVE <direction>, PICK <item>, DROP <item>,
+INVENTORY, USE <item>, TALK, ATTACK, STATUS, MAP, SAVE, LOAD, EXIT.
+
+> LOOK
+[1] Arrival Courtyard
+A quiet courtyard marks the entrance to the forgotten kingdom.
+Exits: NORTH EAST
+Characters: Mira the Guide
+
+> TALK
+The three seals are hidden in the library, garden and watchtower. Look carefully.
+
+> MOVE NORTH
+You travel NORTH...
+
+[2] Old Library
+Dusty shelves surround a pedestal. An ancient seal rests among forgotten books.
+
+> PICK ANCIENT SEAL
+Picked up: ANCIENT SEAL
+
+> INVENTORY
+ANCIENT SEAL (Treasure)
+
+> STATUS
+Health: 100 | Score: 10 | Current room: Old Library
+
+> MAP
+MAP: [1] Courtyard -- [2] Library -- [4] Hall -- [5] Watchtower -- [6] Vault
+                         [3] Greenhouse
+
+> SAVE
+Game saved to saves/savegame.txt
+
+This is an illustrative documentation transcript, not a verbatim automated test log.
