@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.16)
+project(TheLostKingdom VERSION 1.0.0 LANGUAGES C CXX)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_library(game_utils STATIC c_modules/c_utils.c)
+target_include_directories(game_utils PUBLIC include)
+
+add_executable(lost_kingdom main.cpp cpp_modules/Game.cpp)
+target_include_directories(lost_kingdom PRIVATE include)
+target_link_libraries(lost_kingdom PRIVATE game_utils)
+
+if(MSVC)
+    target_compile_options(game_utils PRIVATE /W4)
+    target_compile_options(lost_kingdom PRIVATE /W4)
+else()
+    target_compile_options(game_utils PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(lost_kingdom PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(test_command_parser tests/test_command_parser.c)
+    target_link_libraries(test_command_parser PRIVATE game_utils)
+    add_test(NAME command_parser COMMAND test_command_parser)
+endif()
