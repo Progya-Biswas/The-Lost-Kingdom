@@ -1,14 +1,6 @@
-#include "Game.hpp"
-#include <exception>
-#include <iostream>
+#include "VisualGame.hpp"
 
 int main() {
-    try {
-        lostkingdom::Game game;
-        game.run();
-    } catch (const std::exception& error) {
-        std::cerr << "Fatal error: " << error.what() << '\n';
-        return 1;
-    }
-    return 0;
+    VisualGame game;
+    return game.run();
 }
