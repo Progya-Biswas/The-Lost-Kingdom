@@ -17,24 +17,24 @@ The Lost Kingdom is a small 2D top-down fantasy adventure built with C11 and C++
 The intended route is Courtyard → Library → Courtyard → Greenhouse → Sunken Hall → Watchtower → Hidden Vault.
 
 ## 3. Graphical interface
-- Top bar: game title, score and health.
-- Main viewport: 12 × 8 room tile grid, doors, room decorations, objects, NPCs and player.
-- Right panel: quest objectives, satchel/inventory and story log.
-- Bottom strip: movement and action shortcuts.
-- Start and victory screens.
-- Inventory and world map overlays.
-- Optional typed command overlay.
+- Game name, score, and health are located at the top of the screen. 
+- The screen will be composed of a 12 by 8 grid of tiles to represent rooms. Doors, decorations and items/npcs and the player.  
+- Quest goals.  Satchel and Story on the right side of the screen. 
+- Keys for moving around and interacting at the bottom of the screen. 
+- Will have a start screen and win screen. 
+- Will have an inventory and map screen.  
+- Can type out commands (maybe).  
 
-The initial visual style is drawn with raylib primitives. Room color palettes and decorations distinguish the six locations without external sprite assets.
+Using raylibs basic functions I will draw everything out. Different colors and decoration for each room to tell them apart. 
 
 ## 4. Controls
-WASD or arrow keys move the player. E interacts with nearby objects or characters. I toggles inventory, M toggles the world map, H displays help, slash opens the typed command console, Enter executes a typed command, F5 saves, and F9 loads.
+Will use W, A, S, D, and Arrow keys to move around. E will allow you to interact with objects and NPCs. I opens your inventory.  M opens the map.  H shows you controls.  / allows you to type out commands.  Enter submits your typed command.  F5 saves and F9 loads. 
 
 ## 5. C/C++ architecture
 
 ### C11 module
-- `include/c_utils.h`: `CommandType` enum, `ParsedCommand` struct and C function declarations.
-- `c_modules/c_utils.c`: command parsing, uppercase normalization, score calculation and dynamic string duplication.
+- `include/c_utils.h`: `CommandType` enum, `ParsedCommand` struct, and C function declarations.
+- `c_modules/c_utils.c`: command parsing, uppercase normalization, score calculation, and dynamic string duplication.
 - The C parser validates pointers and uses bounded copying before tokenization.
 
 ### C++17 modules
@@ -44,12 +44,12 @@ WASD or arrow keys move the player. E interacts with nearby objects or character
 - `cli_main.cpp`: optional terminal entry point.
 
 ### C/C++ integration
-The graphical command console and GUI actions call the C parser. The C parser returns a `ParsedCommand`, and the C++ controller dispatches the corresponding command. The header uses `extern "C"` under C++ to preserve C language linkage.
+The graphical command console and GUI commands invoke the C parser. The C parser will return a ParsedCommand, which our C++ Controller will then use to run the correct command. The header has been written using extern "C" in C++ to maintain the linkage of the C language. 
 
-CMake compiles the C module as C11, the game modules as C++17, fetches the pinned raylib 6.2 dependency, and links the executables.
+Using CMake, we are able to build our project as C11 for the C module. Build out games as C++17 and get our pinned raylib dependency version 6.2. Then link to the executable files.  
 
 ## 6. OOP and STL concepts
-- Encapsulation: Player, Room, Item and Game keep state private.
+- Encapsulation: Player, Room, Item, and Game keep state private.
 - Inheritance: Treasure and Tool derive from Item; Guide and Guardian derive from Character.
 - Virtual functions: Item category/use calls dispatch by derived type through base-class pointers.
 - Abstract class: Character declares a pure virtual interact method.
@@ -69,10 +69,10 @@ The graphical layer demonstrates:
 - State transitions between title, play and victory screens.
 
 ## 8. Save/load
-F5 writes the current room, score, quest item flags and Guardian state to `saves/graphical_save.txt`. F9 restores those values. The file format is intentionally simple for a teaching project.
+F5 writes the current room, score, quest item flags, and Guardian state to `saves/graphical_save.txt`. F9 restores those values. The file format is intentionally simple for a teaching project.
 
 ## 9. Build and test
 See the root README and docs/GRAPHICAL_GAME_GUIDE.md. CTest runs the C command parser tests. GitHub Actions builds both the graphical and terminal targets and executes those tests.
 
 ## 10. Limitations and possible extensions
-Room topology and visual placement are currently defined in the source code. Files under data/ are reference material rather than runtime-loaded room definitions. Art is currently procedural, using raylib primitives; sprite sheets, sound, animated character sprites, additional levels and more comprehensive C++ gameplay tests are possible future improvements.
+Room topologies and placement of objects in rooms are hard-coded at this time. All files located in data/ are used for reference and do not represent rooms that will be played in the game. Currently, we are using art from raylib to create our graphics. We can implement sprites, sound, animated sprites for the player, and more tests on C++ gameplay in the future. 
