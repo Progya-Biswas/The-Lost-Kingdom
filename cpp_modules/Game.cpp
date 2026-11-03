@@ -52,6 +52,7 @@ int Room::destination(const std::string& direction) const {
     if (it == exits_.end()) throw std::out_of_range("There is no exit in that direction.");
     return it->second;
 }
+const std::map<std::string, int>& Room::exits() const { return exits_; }
 void Room::addItem(std::shared_ptr<Item> item) { items_.push_back(std::move(item)); }
 std::shared_ptr<Item> Room::takeItem(const std::string& name) {
     auto it = std::find_if(items_.begin(), items_.end(), [&](const auto& item) {
@@ -64,6 +65,7 @@ std::shared_ptr<Item> Room::takeItem(const std::string& name) {
 }
 void Room::addCharacter(std::shared_ptr<Character> character) { characters_.push_back(std::move(character)); }
 const std::vector<std::shared_ptr<Item>>& Room::items() const { return items_; }
+bool Room::hasCharacters() const { return !characters_.empty(); }
 void Room::describe(std::ostream& out) const {
     out << "\n[" << id_ << "] " << name_ << "\n" << description_ << "\nExits: ";
     if (exits_.empty()) out << "none";
@@ -120,7 +122,8 @@ const std::vector<std::shared_ptr<Item>>& Player::inventory() const { return inv
 void Player::clearInventory() { inventory_.clear(); }
 void Player::addLoadedItem(std::shared_ptr<Item> item) { if (item && inventory_.size() < INVENTORY_LIMIT) inventory_.push_back(item); }
 
-Game::Game() : player_("Adventurer"), guardianDefeated_(false), puzzleSolved_(false),
+Game::Game(std::ostream& out)
+             : out_(out), player_("Adventurer"), guardianDefeated_(false), puzzleSolved_(false),
                running_(true), won_(false), treasuresFound_(0), puzzlesSolved_(0) {
     createWorld();
 }
@@ -145,61 +148,61 @@ void Game::createWorld() {
     rooms_.at(5).addCharacter(std::make_shared<Guardian>());
 }
 void Game::showHelp() const {
-    std::cout << "\nCommands: HELP, LOOK, MOVE <direction>, PICK <item>, DROP <item>,\n"
+    out_ << "\nCommands: HELP, LOOK, MOVE <direction>, PICK <item>, DROP <item>,\n"
                  "INVENTORY, USE <item>, TALK, ATTACK, STATUS, MAP, SAVE, LOAD, EXIT\n";
 }
 void Game::move(const std::string& direction) {
     auto& room = rooms_.at(player_.roomId());
     if (!room.hasExit(direction)) {
-        std::cout << "You cannot move " << direction << ". A wall blocks the way.\n";
+        out_ << "You cannot move " << direction << ". A wall blocks the way.\n";
         return;
     }
     if (player_.roomId() == 5 && direction == "NORTH" && !guardianDefeated_) {
-        std::cout << "The Stone Guardian blocks the arch. Use the LUMINOUS KEY first.\n";
+        out_ << "The Stone Guardian blocks the arch. Use the LUMINOUS KEY first.\n";
         return;
     }
     player_.setRoomId(room.destination(direction));
-    rooms_.at(player_.roomId()).describe(std::cout);
+    rooms_.at(player_.roomId()).describe(out_);
 }
 void Game::pick(const std::string& name) {
     auto item = rooms_.at(player_.roomId()).takeItem(name);
-    if (!item) { std::cout << "That object is not in this location.\n"; return; }
+    if (!item) { out_ << "That object is not in this location.\n"; return; }
     if (!player_.pick(item)) {
         rooms_.at(player_.roomId()).addItem(item);
-        std::cout << "Your inventory is full (maximum 6). The object remains here.\n";
+        out_ << "Your inventory is full (maximum 6). The object remains here.\n";
         return;
     }
     if (item->category() == "Treasure") {
         ++treasuresFound_;
         player_.addScore(calculate_score(1, 0, 0));
     }
-    std::cout << "Collected: " << item->name() << "\n";
+    out_ << "Collected: " << item->name() << "\n";
 }
 void Game::drop(const std::string& name) {
     auto item = player_.drop(name);
-    if (!item) { std::cout << "You do not have that object.\n"; return; }
+    if (!item) { out_ << "You do not have that object.\n"; return; }
     rooms_.at(player_.roomId()).addItem(item);
-    std::cout << "Dropped: " << item->name() << "\n";
+    out_ << "Dropped: " << item->name() << "\n";
 }
 void Game::use(const std::string& name) {
-    if (!player_.hasItem(name)) { std::cout << "You are not carrying that item.\n"; return; }
+    if (!player_.hasItem(name)) { out_ << "You are not carrying that item.\n"; return; }
     if (name == "LUMINOUS KEY" && player_.roomId() == 5 && !guardianDefeated_) {
         guardianDefeated_ = true;
         ++puzzlesSolved_;
         player_.addScore(calculate_score(0, 1, 0));
-        std::cout << "The key shines brightly. The guardian's seal dissolves; the northern arch opens!\n";
+        out_ << "The key shines brightly. The guardian's seal dissolves; the northern arch opens!\n";
     } else if (name == "ANCIENT SEAL" && player_.roomId() == 6) {
         if (!puzzleSolved_) {
             puzzleSolved_ = true;
             ++puzzlesSolved_;
             player_.addScore(calculate_score(0, 1, 0));
-            std::cout << "The seal fits the vault altar. The Lost Kingdom's mystery is solved!\n";
-        } else std::cout << "The vault puzzle is already solved.\n";
+            out_ << "The seal fits the vault altar. The Lost Kingdom's mystery is solved!\n";
+        } else out_ << "The vault puzzle is already solved.\n";
     } else {
-        std::cout << "You try the item. " << name << ": ";
+        out_ << "You try the item. " << name << ": ";
         auto it = std::find_if(player_.inventory().begin(), player_.inventory().end(),
             [&](const auto& item) { return item->name() == name; });
-        if (it != player_.inventory().end()) std::cout << (*it)->use() << "\n";
+        if (it != player_.inventory().end()) out_ << (*it)->use() << "\n";
     }
 }
 void Game::save() const {
@@ -208,11 +211,11 @@ void Game::save() const {
     out << player_.roomId() << "\n" << player_.health() << "\n" << player_.score() << "\n"
         << guardianDefeated_ << "\n" << puzzleSolved_ << "\n" << treasuresFound_ << "\n" << puzzlesSolved_ << "\n";
     for (const auto& item : player_.inventory()) out << item->category() << "|" << item->name() << "\n";
-    std::cout << "Game saved to saves/savegame.txt\n";
+    out_ << "Game saved to saves/savegame.txt\n";
 }
 void Game::load() {
     std::ifstream in("saves/savegame.txt");
-    if (!in) { std::cout << "No save file found. Play a little and use SAVE first.\n"; return; }
+    if (!in) { out_ << "No save file found. Play a little and use SAVE first.\n"; return; }
     int room, health, score, treasureCount, puzzleCount;
     bool guardian, puzzle;
     if (!(in >> room >> health >> score >> guardian >> puzzle >> treasureCount >> puzzleCount))
@@ -232,65 +235,71 @@ void Game::load() {
     player_.addScore(score - player_.score());
     guardianDefeated_ = guardian; puzzleSolved_ = puzzle;
     treasuresFound_ = treasureCount; puzzlesSolved_ = puzzleCount;
-    std::cout << "Saved game loaded.\n";
+    out_ << "Saved game loaded.\n";
 }
 void Game::showMap() const {
-    std::cout << "\nMAP: [1] Courtyard -- [2] Library -- [4] Hall -- [5] Watchtower -- [6] Vault\n"
+    out_ << "\nMAP: [1] Courtyard -- [2] Library -- [4] Hall -- [5] Watchtower -- [6] Vault\n"
                  "                         [3] Greenhouse\n";
 }
 void Game::checkEnding() {
     if (player_.health() <= 0) {
-        std::cout << "\nYour strength fades. The kingdom remains lost. GAME OVER.\n";
+        out_ << "\nYour strength fades. The kingdom remains lost. GAME OVER.\n";
         running_ = false;
     } else if (player_.roomId() == 6 && puzzleSolved_) {
-        std::cout << "\nVICTORY! You restored the final seal and uncovered the kingdom's secret.\n";
+        out_ << "\nVICTORY! You restored the final seal and uncovered the kingdom's secret.\n";
         running_ = false; won_ = true;
     }
 }
+void Game::printIntro() {
+    out_ << "=====================================\n"
+            "          THE LOST KINGDOM\n"
+            "=====================================\n"
+            "Explore the kingdom, collect its seal and solve the vault puzzle.\n"
+            "Type HELP to see commands. Type EXIT to leave.\n";
+    rooms_.at(1).describe(out_);
+}
+void Game::handleCommand(const std::string& line) {
+    ParsedCommand command{};
+    if (!parse_command(line.c_str(), &command)) return;
+    try {
+        switch (command.type) {
+            case CMD_HELP: showHelp(); break;
+            case CMD_LOOK: rooms_.at(player_.roomId()).describe(out_); break;
+            case CMD_MOVE: move(command.argument); break;
+            case CMD_PICK: pick(command.argument); break;
+            case CMD_DROP: drop(command.argument); break;
+            case CMD_INVENTORY: player_.showInventory(out_); break;
+            case CMD_USE: use(command.argument); break;
+            case CMD_STATUS: player_.showStatus(out_); break;
+            case CMD_SAVE: save(); break;
+            case CMD_LOAD: load(); break;
+            case CMD_MAP: showMap(); break;
+            case CMD_TALK:
+                if (player_.roomId() == 1) out_ << Guide().interact() << "\n";
+                else if (player_.roomId() == 5) out_ << Guardian().interact() << "\n";
+                else out_ << "There is nobody here to talk to.\n";
+                break;
+            case CMD_ATTACK:
+                if (player_.roomId() == 5 && !guardianDefeated_) {
+                    player_.damage(25);
+                    out_ << "The guardian repels your attack. Health reduced by 25.\n";
+                } else out_ << "There is no hostile character to attack here.\n";
+                break;
+            case CMD_EXIT: running_ = false; out_ << "Thanks for playing!\n"; break;
+            default: out_ << "Unknown command. Type HELP for instructions.\n"; break;
+        }
+        checkEnding();
+    } catch (const std::exception& ex) {
+        out_ << "Error: " << ex.what() << "\n";
+    }
+}
 void Game::run() {
-    std::cout << "=====================================\n"
-                 "          THE LOST KINGDOM\n"
-                 "=====================================\n"
-                 "Explore the kingdom, collect its seal and solve the vault puzzle.\n"
-                 "Type HELP to see commands. Type EXIT to leave.\n";
-    rooms_.at(1).describe(std::cout);
+    printIntro();
     std::string line;
     while (running_) {
-        std::cout << "\n> ";
+        out_ << "\n> ";
         if (!std::getline(std::cin, line)) break;
-        ParsedCommand command{};
-        if (!parse_command(line.c_str(), &command)) continue;
-        try {
-            switch (command.type) {
-                case CMD_HELP: showHelp(); break;
-                case CMD_LOOK: rooms_.at(player_.roomId()).describe(std::cout); break;
-                case CMD_MOVE: move(command.argument); break;
-                case CMD_PICK: pick(command.argument); break;
-                case CMD_DROP: drop(command.argument); break;
-                case CMD_INVENTORY: player_.showInventory(std::cout); break;
-                case CMD_USE: use(command.argument); break;
-                case CMD_STATUS: player_.showStatus(std::cout); break;
-                case CMD_SAVE: save(); break;
-                case CMD_LOAD: load(); break;
-                case CMD_MAP: showMap(); break;
-                case CMD_TALK:
-                    if (player_.roomId() == 1) std::cout << Guide().interact() << "\n";
-                    else if (player_.roomId() == 5) std::cout << Guardian().interact() << "\n";
-                    else std::cout << "There is nobody here to talk to.\n";
-                    break;
-                case CMD_ATTACK:
-                    if (player_.roomId() == 5 && !guardianDefeated_) {
-                        player_.damage(25);
-                        std::cout << "The guardian repels your attack. Health reduced by 25.\n";
-                    } else std::cout << "There is no hostile character to attack here.\n";
-                    break;
-                case CMD_EXIT: running_ = false; std::cout << "Thanks for playing!\n"; break;
-                default: std::cout << "Unknown command. Type HELP for instructions.\n"; break;
-            }
-            checkEnding();
-        } catch (const std::exception& ex) {
-            std::cout << "Error: " << ex.what() << "\n";
-        }
+        handleCommand(line);
     }
 }
 } // namespace lostkingdom

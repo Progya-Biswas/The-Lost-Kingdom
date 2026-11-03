@@ -26,20 +26,23 @@ The game is drawn in a dark purple and lavender palette. Its rooms, doors, objec
 
 The project also keeps its original terminal version. That makes it possible to explore the same C command parser and C++ game model without the graphical window.
 
-## The journey
+## `02 / GAMEPLAY PREVIEW`
 
-There are six places to explore:
+A successful playthrough follows this route:
+1. Start in the **Arrival Courtyard** and talk to Mira the Guide.
+2. Travel north to the **Old Library** and collect the `ANCIENT SEAL`.
+3. Return to the courtyard, travel east to the **Greenhouse**, and collect the `LUMINOUS KEY`.
+4. Travel south to the **Sunken Hall**, then east to the **Watchtower**.
+5. Use the `LUMINOUS KEY` to dissolve the guardian's seal.
+6. Move north into the **Hidden Vault** and use the `ANCIENT SEAL`.
 
-| Place | What you will find |
-|---|---|
-| **1. Arrival Courtyard** | Your starting point. Meet Mira, the guide. |
-| **2. Old Library** | The Ancient Seal is hidden among the old books. |
-| **3. Greenhouse** | Find the Luminous Key. |
-| **4. Sunken Hall** | A quiet connecting room with an optional Royal Coin. |
-| **5. Watchtower** | The Stone Guardian guards the northern arch. |
-| **6. Hidden Vault** | Use the Ancient Seal at the altar to finish the quest. |
+### Gameplay capture
 
-### A simple map of the route
+![The Lost Kingdom gameplay](screenshots/gameplay_screenshot.jpg)
+
+A text transcript is available at [screenshots/gameplay_transcript.txt](screenshots/gameplay_transcript.txt).
+
+## `03 / WORLD MAP`
 
 ```text
         ┌──────────────────────┐
