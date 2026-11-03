@@ -1,199 +1,247 @@
 <div align="center">
 
 # ✦ THE LOST KINGDOM ✦
-### A 2D FANTASY ADVENTURE BUILT WITH C11 + C++17
+### A small adventure through a kingdom that time forgot.
 
-**EXPLORE  ·  COLLECT  ·  UNLOCK  ·  RESTORE**
+**C11 · C++17 · raylib · CMake**
 
-![C11](https://img.shields.io/badge/C-C11-00599C?style=for-the-badge&logo=c&logoColor=white)
-![C++17](https://img.shields.io/badge/C++-17-7B2CBF?style=for-the-badge&logo=cplusplus&logoColor=white)
-![raylib](https://img.shields.io/badge/Graphics-raylib%206.2-9A72CF?style=for-the-badge)
-![CMake](https://img.shields.io/badge/Build-CMake-064F8C?style=for-the-badge&logo=cmake&logoColor=white)
+![C11](https://img.shields.io/badge/C-11-7B5BC7?style=flat-square&logo=c&logoColor=white)
+![C++17](https://img.shields.io/badge/C++-17-9A78D6?style=flat-square&logo=cplusplus&logoColor=white)
+![raylib](https://img.shields.io/badge/graphics-raylib_6.2-B89BE8?style=flat-square)
+![CMake](https://img.shields.io/badge/build-CMake-6E55A4?style=flat-square&logo=cmake&logoColor=white)
 
-*A small kingdom, six connected locations, two essential relics, and one final vault.*
+◇ ───────────────────────────────────────── ◇
+
+*Explore quiet halls. Find forgotten objects. Bring the kingdom back to life.*
 
 </div>
 
 ---
 
-## 01 / THE GAME
+## Welcome to Eldoria
 
-**The Lost Kingdom** is a 2D top-down fantasy exploration game. The graphical edition replaces the original command-only interface with a desktop window, animated player character, illustrated rooms, collectible objects, doors, NPCs, a quest tracker, and an inventory panel.
+The Lost Kingdom is a 2D, top-down fantasy adventure. You arrive in a forgotten kingdom with a simple task: find the objects that have been hidden across its rooms, get past the Stone Guardian, and restore the seal in the Hidden Vault.
 
-The player explores Eldoria, meets Mira the Guide, finds the Ancient Seal in the Old Library, retrieves the Luminous Key from the Greenhouse, opens the Stone Guardian's barrier in the Watchtower, and restores the Hidden Vault.
+The game is drawn in a dark purple and lavender palette. Its rooms, doors, objects, characters and interface are made from geometric shapes using **raylib**. You can walk around the world, interact with people and objects, keep an eye on your objectives, and open an inventory or map whenever you need one.
 
-The original terminal edition is still available as an optional executable for studying the C command parser and the C++ game model.
+The project also keeps its original terminal version. That makes it possible to explore the same C command parser and C++ game model without the graphical window.
 
-## 02 / GRAPHICAL FEATURES
+## The journey
 
-- **Six connected rooms:** Arrival Courtyard, Old Library, Greenhouse, Sunken Hall, Watchtower and Hidden Vault.
-- **Top-down movement:** walk using WASD or the arrow keys.
-- **NPC interaction:** speak to Mira and the Stone Guardian.
-- **Collectibles:** Ancient Seal, Luminous Key and optional Royal Coin.
-- **Quest tracker:** live objectives and collected items.
-- **World map and inventory overlays:** press M and I.
-- **In-game command console:** press / to type commands; the C11 parser interprets them.
-- **Save and load:** F5 saves and F9 restores progress.
-- **Victory scene:** restore the seal in the Hidden Vault.
+There are six places to explore:
 
-## 03 / HOW TO PLAY
-
-| Key | Action |
+| Place | What you will find |
 |---|---|
-| W A S D / Arrow keys | Move the character |
-| E | Interact with a nearby character, item or altar |
-| I | Open or close inventory |
-| M | Open or close the world map |
-| H | Show help |
-| / | Open the typed command console |
-| Enter | Execute a command in the command console |
-| Backspace | Edit a command |
-| F5 / F9 | Save / load progress |
-| Esc | Close an overlay or exit the window |
+| **1. Arrival Courtyard** | Your starting point. Meet Mira, the guide. |
+| **2. Old Library** | The Ancient Seal is hidden among the old books. |
+| **3. Greenhouse** | Find the Luminous Key. |
+| **4. Sunken Hall** | A quiet connecting room with an optional Royal Coin. |
+| **5. Watchtower** | The Stone Guardian guards the northern arch. |
+| **6. Hidden Vault** | Use the Ancient Seal at the altar to finish the quest. |
 
-### Recommended winning route
+### A simple map of the route
 
-1. Start in the Arrival Courtyard and walk near Mira. Press **E** to hear her clue.
-2. Go through the northern door to the Old Library. Walk near the glowing Ancient Seal and press **E**.
-3. Return to the Courtyard and take the eastern door to the Greenhouse.
+```text
+        ┌──────────────────────┐
+        │     OLD LIBRARY      │
+        │     ANCIENT SEAL     │
+        └──────────┬───────────┘
+                   │
+┌─────────────────┐│   ┌──────────────────┐
+│ ARRIVAL         ├┘   │ GREENHOUSE       │
+│ COURTYARD       │────│ LUMINOUS KEY     │
+│ MIRA THE GUIDE  │    └────────┬─────────┘
+└─────────────────┘             │
+                                ▼
+                       ┌──────────────────┐
+                       │   SUNKEN HALL    │
+                       └────────┬─────────┘
+                                │
+                                ▼
+                       ┌──────────────────┐
+                       │   WATCHTOWER     │
+                       │ STONE GUARDIAN   │
+                       └────────┬─────────┘
+                                │
+                         KEY OPENS THE WAY
+                                │
+                                ▼
+                       ┌──────────────────┐
+                       │   HIDDEN VAULT   │
+                       │   FINAL ALTAR    │
+                       └──────────────────┘
+```
+
+## How to play
+
+The graphical game opens with a title screen. Press **Enter** to begin.
+
+| Key | What it does |
+|---|---|
+| **W A S D** or **arrow keys** | Walk around the room |
+| **E** | Talk to someone or interact with a nearby object |
+| **I** | Open or close your inventory |
+| **M** | Open or close the world map |
+| **H** | Show the help message |
+| **/** | Open the typed command console |
+| **Enter** | Run a command in the console |
+| **Backspace** | Edit a command |
+| **F5 / F9** | Save / load your progress |
+
+### Your first playthrough
+
+1. In the Arrival Courtyard, walk close to Mira and press **E**.
+2. Take the northern doorway to the Old Library. Walk close to the Ancient Seal and press **E**.
+3. Return to the courtyard and take the eastern doorway to the Greenhouse.
 4. Collect the Luminous Key with **E**.
-5. Travel south to the Sunken Hall, then east to the Watchtower.
-6. Walk near the Stone Guardian and press **E**. The key opens the northern arch.
-7. Enter the Hidden Vault, walk up to the altar, and press **E** while carrying the Ancient Seal.
+5. Go south to the Sunken Hall, then east to the Watchtower.
+6. Walk up to the Stone Guardian and press **E**. The key opens the northern arch.
+7. Enter the Hidden Vault. Approach the altar and press **E** while carrying the Ancient Seal.
 
-You can also press **/** and type commands such as `TALK`, `MOVE NORTH`, `PICK ANCIENT SEAL`, or `USE LUMINOUS KEY`.
+The optional Royal Coin in the Sunken Hall adds to your score.
 
-## 04 / BUILD AND RUN ON WINDOWS
+## What went into building it?
 
-### Requirements
-- Windows 10 or 11, 64-bit
+This project brings together two languages and a graphics library.
+
+### C11 — the command utilities
+
+C handles the small, reusable command-processing layer. The parser takes text such as `MOVE NORTH`, identifies the command, and places the result into a structure that the C++ side can use.
+
+A few C concepts appear directly in this module:
+
+- **Enumeration (`enum`)** — `CommandType` gives each command a readable identifier such as `CMD_MOVE` or `CMD_PICK`.
+- **Structure (`struct`)** — `ParsedCommand` keeps the command type and its argument together.
+- **Pointers and `const`** — the parser receives the input string and an output pointer, while protecting the original input from modification.
+- **Character arrays and strings** — a bounded buffer, `strtok`, `toupper` and `strcmp` split and normalise the user's command.
+- **Functions and return values** — `calculate_score()` applies the score formula and `parse_command()` reports whether parsing succeeded.
+- **Dynamic memory** — `duplicate_text()` demonstrates `malloc`, `memcpy` and caller-owned memory that must eventually be released with `free`.
+
+### C++17 — the game model
+
+C++ is used for the objects and behaviour that make up the kingdom. The original game model includes classes for `Item`, `Treasure`, `Tool`, `Character`, `Guide`, `Guardian`, `Room`, `Player` and `Game`.
+
+The main OOP ideas are not just vocabulary in this project; they have a place in the code:
+
+- **Encapsulation** — classes keep their state private and expose methods for controlled changes.
+- **Inheritance** — `Treasure` and `Tool` extend `Item`; `Guide` and `Guardian` extend the abstract `Character` class.
+- **Virtual functions and overriding** — derived item classes provide their own `category()` and `use()` behaviour.
+- **Abstract classes** — `Character::interact()` is a pure virtual function that defines an interface for characters.
+- **Runtime polymorphism** — rooms and inventories hold items through `std::shared_ptr<Item>`, allowing virtual item behaviour to be selected from the actual object type.
+- **Operator overloading** — `Item::operator==` compares items by name.
+- **STL and lambdas** — `std::map`, `std::vector`, `std::find_if` and lambda expressions manage rooms and inventory.
+- **File handling and exceptions** — streams save and restore progress, while exceptions protect the game from invalid operations.
+
+### raylib — bringing the rooms to life
+
+The graphical controller is written in C++. raylib provides the desktop window, keyboard input and drawing functions. The scene is built with geometric primitives: rectangles form the floor tiles and interface panels; circles and polygons create the decorative objects, relics and characters.
+
+The game loop updates movement using frame delta time, handles keyboard input, and redraws the scene. The purple identity runs through the room palettes, panels, highlights and title screen, with lavender used for readable text and important details.
+
+### How the two languages work together
+
+The typed command console sends its text to the C function `parse_command()`. C returns a `ParsedCommand` containing an enum value and argument. The C++ controller reads that result and calls the matching game action.
+
+The shared C header uses `extern "C"` when it is included by C++ code. This preserves C language linkage and lets the C++ program call the C functions. CMake compiles the C source as C11 and the game code as C++17 before linking the targets.
+
+## Build and run on Windows
+
+### What you need
+
+- Windows 10 or 11
 - Visual Studio 2022 with **Desktop development with C++**
 - CMake (included with the Visual Studio C++ workload)
-- Internet access on the first CMake configure so CMake can fetch raylib 6.2
+- Internet access for the first build, so CMake can fetch raylib 6.2
 
-### Step 1 — download the project
-Open the repository, choose **Code → Download ZIP**, extract the ZIP, and open **Developer PowerShell for Visual Studio 2022**.
+### 1. Download the source
 
-### Step 2 — move into the project folder
+Open this repository, select **Code → Download ZIP**, and extract the downloaded folder.
+
+### 2. Open the right terminal
+
+Open **Developer PowerShell for Visual Studio 2022** from the Start menu. Change directory to the extracted project folder. For example:
 
 ```powershell
 cd "$HOME\Downloads\The-Lost-Kingdom-main"
 ```
 
-Adjust the folder name if Windows extracted it with a different suffix.
+The extracted folder may have a slightly different name on your computer.
 
-### Step 3 — configure and build
+### 3. Configure and compile
 
 ```powershell
 cmake -S . -B build
 cmake --build build --config Release
 ```
 
-The first configure downloads and builds the pinned raylib dependency. Later builds reuse the downloaded dependency.
+CMake downloads the pinned raylib 6.2 dependency during the first configuration.
 
-### Step 4 — launch the graphical game
+### 4. Open the game
 
 ```powershell
 .\build\Release\lost_kingdom.exe
 ```
 
-A resizable game window opens. Press **Enter** on the title screen to begin.
+The graphical window should open. Press **Enter** on the title screen.
 
-### Optional — launch the original terminal edition
+### Optional: play the terminal edition
+
+The original command-line edition is kept as a separate target:
 
 ```powershell
 .\build\Release\lost_kingdom_cli.exe
 ```
 
-### MinGW alternative
-
-When using MinGW-w64, configure with the MinGW Makefiles generator:
-
-```powershell
-cmake -S . -B build -G "MinGW Makefiles"
-cmake --build build
-.\build\lost_kingdom.exe
-```
-
-## 05 / C AND C++ CONCEPTS
-
-### C11 utility layer
-- `enum CommandType` gives each supported command a named constant.
-- `struct ParsedCommand` stores the command type and argument together.
-- Pointers and `const char*` are used for input and output parameters.
-- `snprintf`, `strtok`, `toupper` and `strcmp` implement bounded command parsing and case normalisation.
-- `malloc`, `memcpy` and `free` demonstrate dynamic memory ownership.
-- `calculate_score()` demonstrates functions, conditions, arithmetic and return values.
-
-### C++17 game model and graphical layer
-- **Encapsulation:** Player, Room and Game keep their state private and expose methods.
-- **Inheritance:** Treasure and Tool derive from Item; Guide and Guardian derive from Character.
-- **Virtual functions:** Item behaviour is selected through base-class pointers.
-- **Abstract class:** Character declares the pure virtual `interact()` interface.
-- **Operator overloading:** Item overloads `==` to compare names.
-- **STL:** `std::map`, `std::vector`, `std::find_if` and lambdas manage the game data.
-- **Smart pointers:** `std::shared_ptr` manages item and character lifetimes.
-- **File handling:** `std::ofstream` and `std::ifstream` implement save/load.
-- **Exception handling:** C++ exceptions are caught around command execution and startup.
-- **Graphics and event loop:** the raylib window loop reads keyboard input, updates the player, and draws each frame.
-
-### How C and C++ are integrated
-
-The graphical application creates an uppercase command string for an action and passes it to the C function `parse_command()`. The C parser fills a `ParsedCommand` structure. The C++ graphical controller dispatches the parsed enum to the corresponding game action. The command console exposes the same parser to the player.
-
-The C header uses `extern "C"` when included by C++, which preserves C language linkage. CMake compiles the C module as C11 and the game modules as C++17, then links them into the application.
-
-## 06 / PROJECT STRUCTURE
+## A look at the codebase
 
 ```text
 The-Lost-Kingdom/
-├── .github/workflows/build.yml
-├── c_modules/c_utils.c
-├── cpp_modules/Game.cpp
-├── data/rooms.txt
-├── data/story.txt
-├── docs/
-│   ├── GAME_DESIGN.md
-│   ├── GAMEPLAY_TRANSCRIPT.md
-│   ├── GRAPHICAL_GAME_GUIDE.md
-│   └── The_Lost_Kingdom_Project_Report.docx
-├── include/
-│   ├── Game.hpp
-│   └── c_utils.h
-├── tests/test_command_parser.c
-├── visual/
-│   ├── VisualGame.cpp
-│   └── VisualGame.hpp
-├── cli_main.cpp
-├── main.cpp
-├── CMakeLists.txt
-└── README.md
+├── .github/workflows/   # Automated build and test workflow
+├── c_modules/           # C command parser and utilities
+├── cpp_modules/         # C++ object-oriented terminal game model
+├── visual/              # raylib graphical controller and drawing
+├── include/              # Shared headers and class declarations
+├── tests/                # C command-parser tests
+├── data/                 # Room and story reference text
+├── docs/                 # Design notes and gameplay guide
+├── screenshots/          # Gameplay reference assets
+├── saves/                # Local save-file location
+├── main.cpp              # Graphical application entry point
+├── cli_main.cpp          # Terminal application entry point
+└── CMakeLists.txt        # C11/C++17, raylib and test build setup
 ```
 
-## 07 / DOCUMENTATION
+## Build checks
 
-- [Graphical game setup and walkthrough](docs/GRAPHICAL_GAME_GUIDE.md)
-- [Game design and technical notes](docs/GAME_DESIGN.md)
-- [Original command-line gameplay transcript](docs/GAMEPLAY_TRANSCRIPT.md)
-- [C/C++ project report (Word)](docs/The_Lost_Kingdom_Project_Report.docx)
+The GitHub Actions workflow builds the graphical and terminal targets on Windows and Linux, then runs the C command-parser tests with CTest.
 
-## 08 / TESTING AND CI
-
-The C command parser is tested with CTest. GitHub Actions configures the project, builds the graphical and command-line targets, and runs the parser tests.
+To run the parser tests locally after building:
 
 ```bash
 ctest --test-dir build --output-on-failure
 ```
 
-## 09 / KNOWN SCOPE
+## A few honest notes
 
-The room layouts and visual objects are currently defined in code. The text files under `data/` are reference data and are not dynamically loaded yet. The game uses raylib drawing primitives for its initial art, so it does not require separate sprite downloads. The save file is a simple educational format, not a versioned commercial save system.
+The first graphical edition uses art drawn from raylib shapes rather than external sprite sheets. The room layouts and object positions are currently set in the C++ source; the text files in `data/` are reference material and are not loaded dynamically. Save/load is a lightweight project feature, not a production save system.
+
+There is room to grow this world: animated sprite sheets, sound, more puzzles, additional rooms and richer character interactions would all be natural next steps.
+
+## Project documentation
+
+- [Graphical game guide](docs/GRAPHICAL_GAME_GUIDE.md)
+- [Game design and technical notes](docs/GAME_DESIGN.md)
+- [Terminal edition sample commands](docs/GAMEPLAY_TRANSCRIPT.md)
+- [C and C++ project report (Word)](docs/The_Lost_Kingdom_Project_Report.docx)
 
 ---
 
 <div align="center">
 
-**THE LOST KINGDOM**  
-*Built with C. Modelled with C++. Brought to life with raylib.*
+◇ **THE LOST KINGDOM** ◇
+
+*Made with C, C++ and a little imagination.*
+
+**A forgotten world. A violet glow. A story waiting to be finished.**
 
 </div>
